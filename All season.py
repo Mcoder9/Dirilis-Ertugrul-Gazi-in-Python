@@ -30,7 +30,7 @@ elif browser == 2:
 else:
     print('Give the correct path of %s' % browser)
 
-print('''DIRILIS ERTUGRUL ALL SEASONS IN URDU
+print('''DIRILIS ERTUGRUL ALL SEASONS IN URDU SUBTITLES
     1> Season One
     2> Season Two
     3> Season Three
@@ -52,13 +52,11 @@ def season_01():
         link = driver.find_element(By.CSS_SELECTOR, "div.tab-pane iframe").get_attribute('src')
         print(f'{title}\n{link}')
         print('*****************'.center(50))
-        data.append([title,link])
         url = f'https://dailyurdupoetry.com/dirilis-ertugrul-season-1-in-urdu-episode-{i}-giveme5/'
-
-    print('Season 01 Ended')
+        data.append([title,link])
     df = pd.DataFrame(data,columns=["Title","Link"])
     df.to_csv('season_01.csv')
-
+    print('Season 01 Ended')
 
 def season_02():
     print('Season 02 Started')
@@ -71,9 +69,10 @@ def season_02():
         print('*****************'.center(50))
         url = f'https://dailyurdupoetry.com/dirilis-ertugrul-season-2-in-urdu-episode-{i}-giveme5/'
         data.append([title,link])
-    print('Season 02 Ended')
     df = pd.DataFrame(data,columns=["Title","Link"])
     df.to_csv('season_02.csv')
+    print('Season 02 Ended')
+
 def season_03():
     print('Season 03 Started')
     url = 'https://www.giveme5.tv/dirilis-season-3-urdu/epi-01s3'
@@ -90,13 +89,10 @@ def season_03():
             url=f'https://www.giveme5.tv/dirilis-season-3-urdu/epi-0{i}s3'
         else:
             url=f'https://www.giveme5.tv/dirilis-season-3-urdu/epi-{i}s3'
-
-        print('Season 03 Ended')
         data.append([title,part1,part2,_pass])
     df = pd.DataFrame(data,columns=['Title','Part 01','Part 02','Password'])
     df.to_csv('season_03.csv')
-
-
+    print('Season 03 Ended')
 
 def season_04():
     print('Season 04 Started')
@@ -119,8 +115,8 @@ def season_04():
 
         # Apply and submit password if vedio protected
         try:
-            send_pass = driver.find_element_by_xpath("//input[@class='np_ViewPassword-input ']").send_keys(_pass)
-            submit = driver.find_element(By.XPATH,"//input[@class='np_ViewPassword-submit']").click()
+            driver.find_element_by_xpath("//input[@class='np_ViewPassword-input ']").send_keys(_pass)
+            driver.find_element(By.XPATH,"//input[@class='np_ViewPassword-submit']").click()
         except :
             pass
 
@@ -134,20 +130,16 @@ def season_04():
 
         print(f'{title}\n{link}\nPassword: {_pass}')
         print('*****************'.center(50))
-        data.append([title, link, _pass])
-
-
 
         # Urls for next episode
         if i<=9:
             url=f'https://www.giveme5.tv/dirilis-season-4-urdu/epi-0{i}s4'
         else:
             url=f'https://www.giveme5.tv/dirilis-season-4-urdu/epi-{i}s4'
-
-    print('Season 04 Ended')
-    # Dateframe and import as CSV file into current directory
+        data.append([title, link, _pass])
     df = pd.DataFrame(data,columns=['Title','Link','Pass'])
-    df.to_csv('season_04r.csv')
+    df.to_csv('season_04.csv')
+    print('Season 04 Ended')
 
 def season_05():
     print('Season 05 Started')
@@ -161,8 +153,8 @@ def season_05():
         wait = WebDriverWait(driver, 10)
         wait.until(EC.frame_to_be_available_and_switch_to_it((By.CSS_SELECTOR, "div#comp-kbs163ey iframe")))
         try:
-            send_pass = driver.find_element_by_css_selector("input.np_ViewPassword-input ").send_keys(psw)
-            submit = driver.find_element(By.CSS_SELECTOR,"input.np_ViewPassword-submit").click()
+            driver.find_element_by_css_selector("input.np_ViewPassword-input ").send_keys(psw)
+            driver.find_element(By.CSS_SELECTOR,"input.np_ViewPassword-submit").click()
         except :
             pass
         try:
@@ -171,11 +163,10 @@ def season_05():
         except:
             driver.switch_to.default_content()
             link2 = driver.find_element_by_css_selector('div#comp-kbs163ey iframe').get_attribute('src')
-        data.append([link2])
         print('Part 02: ',link2)
 
     def part_01():
-        url = 'https://www.giveme5.tv/dirilis-season-5-urdu/epi-09s5'
+        url = 'https://www.giveme5.tv/dirilis-season-5-urdu/epi-01s5'
         for i in range(2,60):
             driver.get(url)
             driver.implicitly_wait(5)
@@ -194,8 +185,8 @@ def season_05():
 
             # Apply and submit password if vedio protected
             try:
-                send_pass = driver.find_element_by_css_selector("input.np_ViewPassword-input ").send_keys(psw)
-                submit = driver.find_element(By.CSS_SELECTOR,"input.np_ViewPassword-submit").click()
+                driver.find_element_by_css_selector("input.np_ViewPassword-input ").send_keys(psw)
+                driver.find_element(By.CSS_SELECTOR,"input.np_ViewPassword-submit").click()
             except :
                 pass
 
@@ -208,35 +199,25 @@ def season_05():
                 link = driver.find_element_by_css_selector('div#comp-kbtujaxh iframe').get_attribute('src')
 
             print(f'{title}\n{link}\nPassword: {psw}')
-            if parts == 'Two Parts':
+            if parts.lower() == 'two parts':
                 part_02()
+
             print('*****************'.center(50))
 
             if i<=9:
                 url=f'https://www.giveme5.tv/dirilis-season-5-urdu/epi-0{i}s5'
             else:
                 url=f'https://www.giveme5.tv/dirilis-season-5-urdu/epi-{i}s5'
-            data.append([title,link,psw])
-        df = pd.DataFrame(data,columns=['Title','Part 01','Password','Part 02'])
     part_01()
-    print('Season 05 Started')
+    print('Season 05 Ended')
 
 
-if season==1:
-    season_01()
-elif season==2:
-    season_02()
-elif season==3:
-    season_03()
-elif season==4:
-    season_04()
-elif season == 5:
-    season_05()
+if season == 1: season_01()
+elif season == 2: season_02()
+elif season == 3: season_03()
+elif season == 4: season_04()
+elif season == 5: season_05()
 else:
-    season_01()
-    season_02()
-    season_03()
-    season_04()
-    season_05()
+    season_01(),season_02(),season_03(),season_04(),season_05()
 
 driver.quit()
